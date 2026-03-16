@@ -1,8 +1,13 @@
 from django.core.management.base import BaseCommand
+from django.contrib.auth.models import User
 from django.utils import timezone
 from datetime import datetime
 from zoneinfo import ZoneInfo
 from ShoriWebsite.models import Team, Match
+
+SUPERUSER = [
+    ("th-sz", "dkgtheo44@gmail.com", "saez")
+]
 
 TEAMS = [
     # (name, logo_name, color)
@@ -39,6 +44,14 @@ class Command(BaseCommand):
     help = "Seed database with teams and sample matches"
 
     def handle(self, *args, **options):
+        # Create superusers
+        for username, email, password in SUPERUSER:
+            if not User.objects.filter(username=username).exists():
+                User.objects.create_superuser(username=username, email=email, password=password)
+                self.stdout.write(f"  Superuser {username}: created")
+            else:
+                self.stdout.write(f"  Superuser {username}: exists")
+
         # Create teams
         team_objs = {}
         for name, logo, color in TEAMS:
