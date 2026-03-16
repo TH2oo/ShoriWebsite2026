@@ -1,0 +1,107 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Prochains Matchs{% endblock %}
+{% block description %}Suivi des matchs universitaires{% endblock %}
+
+{% block body_attrs %}style="{% if home_team %}--home-color: {{ home_team.color }};{% endif %} {% if away_team %}--away-color: {{ away_team.color }};{% endif %}"{% endblock %}
+
+{% block nav_home %}active" aria-current="page{% endblock %}
+
+{% block content %}
+    <!-- Couche 5 : Header -->
+    <header class="header">
+        {% if match %}
+        <img src="{% static 'images/Teams/Teams=' %}{{ home_team.logo_name }}.png" class="header-logo header-logo-left" alt="Logo {{ home_team.name }}">
+        <div class="header-center">
+            <p class="header-next">Prochain Match</p>
+            <p class="header-day">{{ match.datetime|date:"l"}}</p>
+            <p class="header-date">{{ match.datetime|date:"j F"}}</p>
+            <time class="header-time" datetime="{{ match.datetime|date:'H:i' }}">{{ match.datetime|date:"H" }}H{{ match.datetime|date:"i" }}</time>
+            <img src="{% static 'images/Cadres/Line.svg' %}" class="header-line" alt="" aria-hidden="true">
+            <p class="header-place">{{ match.location }}</p>
+        </div>
+        <img src="{% static 'images/Teams/Teams=' %}{{ away_team.logo_name }}.png" class="header-logo header-logo-right" alt="Logo {{ away_team.name }}">
+        {% else %}
+        <div class="header-center">
+            <p class="header-next">Aucun match à venir</p>
+        </div>
+        {% endif %}
+    </header>
+
+    <!-- Couche 6 : Timer -->
+    {% if match %}
+    <div class="timer-wrapper" aria-label="Compte à rebours avant le match">
+        <p class="timer-label">Temps restant avant le match</p>
+        <div class="timer-box">
+            <img src="{% static 'images/Cadres/Timer.svg' %}" class="timer-bg" alt="" aria-hidden="true">
+            <span class="timer-value" aria-live="polite" id="countdown">--:--:--</span>
+        </div>
+    </div>
+    {% endif %}
+
+    <!-- Cadre profil à droite -->
+    {% if user.is_authenticated %}
+    <div class="profile-cadre-container profile-cadre-auth" aria-label="Menu utilisateur">
+        <img src="{% static 'images/Cadres/LongBigCadre.svg' %}" class="profile-cadre" alt="Cadre profil" aria-hidden="true">
+        <div class="profile-links">
+            <a href="{% url 'profil' %}" class="profile-btn">
+                <img src="{% static 'images/Icons/Property 1=Profile.svg' %}" class="profile-btn-icon" alt="Accueil">
+                <span class="profile-btn-text">Profil</span>
+            </a>
+            <a href="#" class="profile-btn">
+                <img src="{% static 'images/Icons/Property 1=Presence.svg' %}" class="profile-btn-icon" alt="Présence">
+                <span class="profile-btn-text">Presence</span>
+            </a>
+            <a href="{% url 'logout' %}" class="profile-btn">
+                <img src="{% static 'images/Icons/Property 1=logout.svg' %}" class="profile-btn-icon" alt="Déconnexion">
+                <span class="profile-btn-text">Deconnexion</span>
+            </a>
+        </div>
+    </div>
+    {% else %}
+    <a href="{% url 'login' %}" class="profile-cadre-container" aria-label="Aller à la page de connexion">
+        <img src="{% static 'images/Cadres/LongCadre.svg' %}" class="profile-cadre" alt="Cadre profil" aria-hidden="true">
+        <img src="{% static 'images/Icons/Property 1=Profile.svg' %}" class="profile-cadre-icon" alt="Icône profil">
+        <span class="profile-cadre-text">Connexion</span>
+    </a>
+    {% endif %}
+
+{% endblock %}
+
+{% block extra_js %}
+    {% if match %}
+    <script>
+    (function() {
+        const target = new Date("{{ match_iso }}").getTime();
+        const el = document.getElementById("countdown");
+
+        function pad(n) { return String(n).padStart(2, "0"); }
+
+        function update() {
+            const diff = target - Date.now();
+            if (diff <= 0) {
+                el.textContent = "C'est parti !";
+                return;
+            }
+            const w = Math.floor(diff / 604800000);
+            const d = Math.floor((diff % 604800000) / 86400000);
+            const h = Math.floor((diff % 86400000) / 3600000);
+            const m = Math.floor((diff % 3600000) / 60000);
+            const s = Math.floor((diff % 60000) / 1000);
+
+            if (w > 0) {
+                el.textContent = w + "s " + pad(d) + "j " + pad(h) + "h";
+            } else if (d > 0) {
+                el.textContent = d + "j " + pad(h) + "h " + pad(m) + "m";
+            } else {
+                el.textContent = pad(h) + "h " + pad(m) + "m " + pad(s) + "s ";
+            }
+        }
+
+        update();
+        setInterval(update, 1000);
+    })();
+    </script>
+    {% endif %}
+{% endblock %}

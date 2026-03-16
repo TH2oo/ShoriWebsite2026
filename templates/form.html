@@ -1,0 +1,200 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Candidature{% endblock %}
+{% block description %}Rejoindre SHORI{% endblock %}
+
+{% block extra_css %}<link rel="stylesheet" href="{% static 'css/login.css' %}">{% endblock %}
+
+{% block body_attrs %}class="auth-bg"{% endblock %}
+{% block content %}
+    <main class="login-wrapper">
+        <div class="login-card">
+            <div class="login-content">
+                <img src="{% static 'images/Teams/Teams=Shori.png' %}" class="login-logo" alt="Logo Shori">
+                <h1 class="login-title">Formulaire de recrutement</h1>
+
+                {% if success %}
+                <div class="login-success-mail">
+                    <p>Nous avons bien recu votre candidature</p>
+                </div>
+                {% endif %}
+                {% if errors %}
+                <div class="login-error">
+                    {% for err in errors %}<p>{{ err }}</p>{% endfor %}
+                </div>
+                {% endif %}
+
+                <form method="post" action="{% url 'form' %}" class="login-form">
+                    {% csrf_token %}
+
+                    <div class="login-row">
+                        <div class="login-field">
+                            <label for="id_last_name" class="login-label">Nom</label>
+                            <input type="text" id="id_last_name" name="last_name" class="login-input" required autofocus autocomplete="family-name">
+                        </div>
+                        <div class="login-field">
+                            <label for="id_first_name" class="login-label">Prenom</label>
+                            <input type="text" id="id_first_name" name="first_name" class="login-input" required autocomplete="given-name">
+                        </div>
+                    </div>
+
+                    <div class="login-field">
+                        <label for="id_email" class="login-label">Adresse e-mail</label>
+                        <input type="email" id="id_email" name="email" class="login-input" required autocomplete="email">
+                    </div>
+
+                    <div class="login-row">
+                        <div class="login-field">
+                            <label for="id_password" class="login-label">Mot de passe</label>
+                            <input type="password" id="id_password" name="password" class="login-input" required autocomplete="new-password">
+                        </div>
+                        <div class="login-field">
+                            <label for="id_password2" class="login-label">Confirmer</label>
+                            <input type="password" id="id_password2" name="password2" class="login-input" required autocomplete="new-password">
+                        </div>
+                    </div>
+
+                    <div class="login-row">
+                        <div class="login-field">
+                            <label class="login-label">Division</label>
+                            <input type="hidden" name="division" id="id_division" value="loisir">
+                            <div class="dropdown" id="division-dropdown">
+                                <button type="button" class="dropdown-toggle login-input" aria-haspopup="listbox" aria-expanded="false">
+                                    <span class="dropdown-text">Loisir</span>
+                                    <span class="dropdown-arrow" aria-hidden="true"></span>
+                                </button>
+                                <ul class="dropdown-menu" role="listbox">
+                                    <li class="dropdown-item active" role="option" data-value="loisir">Loisir</li>
+                                    <li class="dropdown-item" role="option" data-value="departemental">Departemental</li>
+                                    <li class="dropdown-item" role="option" data-value="regional">Regional</li>
+                                    <li class="dropdown-item" role="option" data-value="pre-national">Pre-national</li>
+                                    <li class="dropdown-item" role="option" data-value="national">National</li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="login-field">
+                            <label class="login-label">Poste</label>
+                            <div class="dropdown multi-select" id="poste-dropdown">
+                                <button type="button" class="dropdown-toggle login-input" aria-haspopup="listbox" aria-expanded="false">
+                                    <span class="dropdown-text">Selectionner</span>
+                                    <span class="dropdown-arrow" aria-hidden="true"></span>
+                                </button>
+                                <ul class="dropdown-menu" role="listbox">
+                                    <li class="dropdown-item" role="option" data-value="passeur">
+                                        <span class="dropdown-checkbox"></span>Passeur
+                                    </li>
+                                    <li class="dropdown-item" role="option" data-value="receptionneur-attaquant">
+                                        <span class="dropdown-checkbox"></span>R4
+                                    </li>
+                                    <li class="dropdown-item" role="option" data-value="central">
+                                        <span class="dropdown-checkbox"></span>Central
+                                    </li>
+                                    <li class="dropdown-item" role="option" data-value="pointu">
+                                        <span class="dropdown-checkbox"></span>Pointu
+                                    </li>
+                                    <li class="dropdown-item" role="option" data-value="libero">
+                                        <span class="dropdown-checkbox"></span>Libero
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+                    <button type="submit" class="login-submit">Postuler</button>
+                </form>
+
+                <p class="login-switch">Deja un compte ? <a href="{% url 'login' %}" class="login-switch-link">Se connecter</a></p>
+            </div>
+        </div>
+
+        <!-- Cadre profil à droite, visible comme au hover de l'accueil -->
+        <div class="profile-cadre-container-login">
+            <img src="{% static 'images/Cadres/LongCadre.svg' %}" class="profile-cadre-login" alt="Cadre profil" aria-hidden="true">
+            <img src="{% static 'images/Icons/Property 1=Profile.svg' %}" class="profile-cadre-icon-login" alt="Icône profil">
+            <span class="profile-cadre-text-login">Connexion</span>
+        </div>
+
+    </main>
+
+    <script>
+    (function() {
+        // Division dropdown (single select)
+        const divisionDd = document.getElementById('division-dropdown');
+        const divisionToggle = divisionDd.querySelector('.dropdown-toggle');
+        const divisionMenu = divisionDd.querySelector('.dropdown-menu');
+        const divisionText = divisionDd.querySelector('.dropdown-text');
+        const divisionHidden = document.getElementById('id_division');
+
+        divisionToggle.addEventListener('click', function() {
+            const open = divisionDd.classList.toggle('open');
+            divisionToggle.setAttribute('aria-expanded', open);
+        });
+
+        divisionMenu.addEventListener('click', function(e) {
+            const item = e.target.closest('.dropdown-item');
+            if (!item) return;
+            divisionMenu.querySelector('.active').classList.remove('active');
+            item.classList.add('active');
+            divisionText.textContent = item.textContent.trim();
+            divisionHidden.value = item.dataset.value;
+            divisionDd.classList.remove('open');
+            divisionToggle.setAttribute('aria-expanded', 'false');
+        });
+
+        // Poste dropdown (multi-select)
+        const posteDd = document.getElementById('poste-dropdown');
+        const posteToggle = posteDd.querySelector('.dropdown-toggle');
+        const posteMenu = posteDd.querySelector('.dropdown-menu');
+        const posteText = posteDd.querySelector('.dropdown-text');
+        const selectedPostes = [];
+
+        posteToggle.addEventListener('click', function() {
+            const open = posteDd.classList.toggle('open');
+            posteToggle.setAttribute('aria-expanded', open);
+        });
+
+        posteMenu.addEventListener('click', function(e) {
+            const item = e.target.closest('.dropdown-item');
+            if (!item) return;
+            item.classList.toggle('active');
+            const value = item.dataset.value;
+            const index = selectedPostes.indexOf(value);
+            if (index > -1) {
+                selectedPostes.splice(index, 1);
+            } else {
+                selectedPostes.push(value);
+            }
+                        // Update text
+            if (selectedPostes.length === 0) {
+                posteText.textContent = 'Selectionner';
+            } else {
+                // Get the text content of selected items and join them
+                const selectedItems = Array.from(posteMenu.querySelectorAll('.dropdown-item.active'));
+                posteText.textContent = selectedItems.map(i => i.textContent.trim()).join(', ');
+            }
+            // Update hidden inputs
+            let container = document.getElementById('poste-inputs');
+            if (!container) {
+                container = document.createElement('div');
+                container.id = 'poste-inputs';
+                container.style.display = 'none';
+                posteDd.appendChild(container);
+            }
+            container.innerHTML = selectedPostes.map(v => '<input type="hidden" name="poste" value="' + v + '">').join('');
+        });
+
+        // Close dropdowns on outside click
+        document.addEventListener('click', function(e) {
+            if (!divisionDd.contains(e.target)) {
+                divisionDd.classList.remove('open');
+                divisionToggle.setAttribute('aria-expanded', 'false');
+            }
+            if (!posteDd.contains(e.target)) {
+                posteDd.classList.remove('open');
+                posteToggle.setAttribute('aria-expanded', 'false');
+            }
+        });
+    })();
+    </script>
+{% endblock %}

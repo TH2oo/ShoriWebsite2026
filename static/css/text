@@ -1,0 +1,36 @@
+
+.profile-links {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: center; /* This will center the links vertically */
+    align-items: flex-start;   /* Align items to the left */
+    padding-left: 3vw;  /* Space from the left edge of the container */
+    gap: 2vh; /* Space between buttons */
+    z-index: 2;
+}
+
+.profile-btn {
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+    color: #fff;
+    font-family: 'PinkBlue', sans-serif;
+    font-size: 1.2vw;
+    transition: transform 0.2s ease;
+    transform: translateX(0);
+}
+
+.profile-btn:hover {
+    transform: translateX(5px); /* small move right on hover */
+}
+
+.profile-btn img {
+    height: 3vh;
+    width: auto;
+    margin-right: 1vw;
+}

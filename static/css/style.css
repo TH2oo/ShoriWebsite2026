@@ -1,0 +1,379 @@
+/* ========================================
+   SHORI — Stylesheet
+   Ref: 1920 × 992 (Figma)
+   ======================================== */
+
+/* --- Fonts --- */
+@font-face { font-family: 'PinkBlue'; src: url('../fonts/Pink Blue.ttf') format('truetype'); }
+@font-face { font-family: 'YujiBoku'; src: url('../fonts/YujiBoku-Regular.ttf') format('truetype'); }
+@font-face { font-family: 'Rajdhani'; src: url('../fonts/Rajdhani-Regular.ttf') format('truetype'); font-weight: 400; }
+@font-face { font-family: 'Rajdhani'; src: url('../fonts/Rajdhani-SemiBold.ttf') format('truetype'); font-weight: 600; }
+@font-face { font-family: 'Rajdhani'; src: url('../fonts/Rajdhani-Bold.ttf') format('truetype'); font-weight: 700; }
+
+/* --- Reset --- */
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+/* --- Base --- */
+html, body {
+    width: 100%; height: 100%;
+    overflow: hidden;
+    background: #141313;
+    color: #fff;
+    font-family: 'PinkBlue', sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+}
+
+/* ===== 1. BACKGROUND ===== */
+.bg-layer  { position: fixed; inset: 0; pointer-events: none; }
+.bg-pattern { background: url('../images/Patterns/BackGround.png') center/cover no-repeat; }
+
+/* ===== 2. PATTERNS ===== */
+.deco { position: fixed; pointer-events: none; z-index: 1; }
+
+.deco-pattern1   { width: 30.1vw; height: 136.1vh; left: -14vw; bottom: -66vh; transform: rotate(73.17deg); }
+.deco-pattern2   { width: 54.7vw; height: 180.9vh; left: -19vw; top: -132vh;   transform: rotate(-172.437deg); }
+.deco-pattern1-r { width: 30.1vw; height: 136.1vh; right: -14vw; bottom: -66vh; transform: scaleX(-1) rotate(73.17deg); }
+.deco-pattern2-r { width: 54.7vw; height: 180.9vh; right: -19vw; top: -132vh;   transform: scaleX(-1) rotate(-172.437deg); }
+
+/* Pattern colors via CSS mask + custom properties */
+.deco-pattern1, .deco-pattern1-r {
+    -webkit-mask-image: url('../images/Patterns/Pattern1.svg');
+    mask-image: url('../images/Patterns/Pattern1.svg');
+    -webkit-mask-size: 100% 100%;
+    mask-size: 100% 100%;
+}
+.deco-pattern2, .deco-pattern2-r {
+    -webkit-mask-image: url('../images/Patterns/Pattern2.svg');
+    mask-image: url('../images/Patterns/Pattern2.svg');
+    -webkit-mask-size: 100% 100%;
+    mask-size: 100% 100%;
+}
+.deco-home { background-color: var(--home-color, #971C22); }
+.deco-away { background-color: var(--away-color, #741C97); }
+
+/* ===== 3. CADRES ===== */
+.cadre        { position: fixed; pointer-events: none; z-index: 2; }
+.cadre-big    { inset: 0; width: 100%; height: 100%; }
+.cadre-little { top: 4.54vh; left: 2.34vw; width: calc(100% - 4.68vw); height: calc(100% - 9.07vh); }
+
+/* ===== 4. NAVBAR ===== */
+
+.navbar {
+    position: fixed;
+    top: -1.01vh;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 10;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    width: 100vw;
+}
+.nav-main {
+    position: relative;
+    height: 7.96vh;
+    overflow: hidden;
+    width: 34.38vw;
+    margin: 0 auto;
+}
+
+.nav-bg {
+    position: absolute; inset: 0;
+    width: 100%; height: 100%;
+    pointer-events: none;
+}
+.nav-links {
+    position: relative; z-index: 1;
+    display: flex; align-items: center; justify-content: center;
+    width: 100%; height: 100%;
+    margin-left: -0.16vw;
+}
+/* NAVBAR BUTTON ANIMATION */
+.nav-btn {
+    display: flex; align-items: center; justify-content: center;
+    padding: 0 1.41vw;
+    height: 72%;
+    font-family: 'PinkBlue', sans-serif;
+    font-size: max(1.15vw, 11px);
+    color: #fff;
+    text-decoration: none;
+    white-space: nowrap;
+    cursor: pointer;
+    position: relative;
+    transform: translateX(0);
+    transition: transform 0.2s ease;
+}
+
+.nav-btn.active,
+.nav-btn:hover {
+    transform: translateY(3px); /* small move right on hover */
+}
+
+.nav-btn.red {
+    color: #971C22;
+}
+
+.nav-btn.red.active,
+.nav-btn.red:hover {
+    color: #971C22;
+    transform: scale(1.1);
+}
+
+/* ===== 5. HEADER ===== */
+.header {
+    position: fixed; inset: 0; z-index: 5;
+    display: flex; align-items: center; justify-content: center;
+    pointer-events: none;
+}
+
+/* Logos */
+.header-logo {
+    position: absolute; top: 25.71vh;
+    height: 45.77vh; width: auto;
+    object-fit: contain;
+    filter: drop-shadow(0 .3vh .8vh rgba(0,0,0,.3));
+}
+.header-logo-left  { right: 61.7vw; }
+.header-logo-right { left: 61.7vw; }
+
+/* Texte central */
+.header-center {
+    display: flex; flex-direction: column;
+    align-items: center; text-align: center;
+    font-family: 'PinkBlue', sans-serif;
+    pointer-events: auto;
+}
+.header-next {
+    font-size: max(1.04vw, 10px); color: #777;
+    line-height: 1; letter-spacing: .12vw;
+    text-transform: uppercase;
+    margin-bottom: 1.61vh;
+}
+.header-day {
+    font-size: max(3.39vw, 18px); color: #fff;
+    line-height: .78;
+    margin-bottom: .40vh;
+}
+.header-date {
+    font-size: max(3.39vw, 18px); color: #fff;
+    line-height: .78;
+    margin-bottom: .81vh;
+}
+.header-time {
+    font-size: max(2.60vw, 14px); color: #971C22;
+    line-height: .78;
+    margin-bottom: 1.51vh;
+}
+.header-line {
+    width: 13.54vw; height: 1.31vh;
+    margin-bottom: 1.81vh;
+}
+.header-place {
+    font-size: max(1.04vw, 10px); color: #777;
+    line-height: 1; letter-spacing: .08vw;
+}
+
+/* ===== 6. TIMER ===== */
+.timer-wrapper {
+    position: fixed; bottom: 0;
+    left: 50%; transform: translateX(-50%);
+    z-index: 5;
+    display: flex; flex-direction: column;
+    align-items: center;
+}
+.timer-label {
+    font-family: 'PinkBlue', sans-serif;
+    font-size: max(.94vw, 10px); color: #777;
+    letter-spacing: .08vw;
+    margin-bottom: .81vh;
+}
+.timer-box {
+    position: relative;
+    width: 17.19vw; height: 8.47vh;
+}
+.timer-bg {
+    position: absolute; inset: 0;
+    width: 100%; height: 100%;
+    pointer-events: none;
+}
+.timer-value {
+    position: relative; z-index: 1;
+    display: flex; align-items: center; justify-content: center;
+    width: 100%; height: 100%;
+    padding: 0;
+    font-family: 'PinkBlue', sans-serif;
+    font-size: max(1.93vw, 14px); color: #fff;
+    white-space: nowrap;
+}
+
+/* ===== PROFIL PAGE BG TEXT ===== */
+.profil-bg-text {
+    position: fixed;
+    top: 40%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-family: 'YujiBoku', sans-serif;
+    font-size: 26.01vw;
+    color: #971C22;
+    opacity: 0.65;
+    white-space: nowrap;
+    pointer-events: none;
+    z-index: 3;
+    user-select: none;
+}
+
+/* ===== PROFILE CADRE (HOME) ===== */
+.profile-cadre-container {
+    position: fixed;
+    top: 50%;
+    right: -42.8vh;
+    transform: translateY(-50%);
+    z-index: 10;
+    width: 49.83vh;
+    height: 7.96vh;
+    pointer-events: auto;
+    display: block;
+    transition: right 0.4s cubic-bezier(.7,0,.3,1);
+}
+.profile-cadre {
+    width: 100%;
+    height: 100%;
+    display: block;
+}
+.profile-cadre-container:hover {
+    right: -28.2vh;
+}
+.profile-cadre-icon {
+    position: absolute;
+    left: 1.3vw;
+    top: 45%;
+    transform: translateY(-50%);
+    height: 2.8vh;
+    width: auto;
+    z-index: 2;
+    pointer-events: none;
+}
+.profile-cadre-text {
+    position: absolute;
+    left: 4vw; /* 1.7vw (icon margin) + icon width */
+    top: 45%;
+    transform: translateY(-50%);
+    font-family: 'PinkBlue', sans-serif;
+    font-size: max(1.2vw, 11px);
+    color: #fff;
+    white-space: nowrap;
+    letter-spacing: 0.04em;
+    transition: opacity 0.3s;
+    pointer-events: none;
+}
+
+/* ===== INSTAGRAM CADRE (HOME - LEFT SIDE) ===== */
+.instagram-cadre-container {
+    position: fixed;
+    top: 50%;
+    left: -42.8vh;
+    transform: translateY(-50%);
+    z-index: 10;
+    width: 49.83vh;
+    height: 7.96vh;
+    pointer-events: auto;
+    display: block;
+    transition: left 0.4s cubic-bezier(.7,0,.3,1);
+}
+.instagram-cadre {
+    width: 100%;
+    height: 100%;
+    display: block;
+    transform: scaleX(-1);
+}
+.instagram-cadre-container:hover {
+    left: -26.5vh;
+}
+.instagram-cadre-icon {
+    position: absolute;
+    right: 1.3vw;
+    top: 45%;
+    transform: translateY(-50%);
+    height: 2.8vh;
+    width: auto;
+    z-index: 2;
+    pointer-events: none;
+}
+.instagram-cadre-text {
+    position: absolute;
+    right: 4vw;
+    top: 45%;
+    transform: translateY(-50%);
+    font-family: 'PinkBlue', sans-serif;
+    font-size: max(1.2vw, 11px);
+    color: #fff;
+    white-space: nowrap;
+}
+
+/* ===== PROFILE CADRE (HOME) - AUTHENTICATED ===== */
+.profile-cadre-auth {
+    width: 47.98vh;
+    height: 18.75vh;
+    right: -41.5vh;
+}
+.profile-cadre-auth:hover {
+    right: -26vh;
+}
+
+.profile-btn-icon {
+    position: absolute;
+    left: -1.7vw;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 1.14vw;
+    z-index: 2;
+    pointer-events: none;
+}
+
+.profile-btn-text {
+    margin-left: 0.5vw;
+    font-family: 'PinkBlue', sans-serif;
+    font-size: max(1.2vw, 11px);
+    color: #fff;
+    white-space: nowrap;
+    letter-spacing: 0.04em;
+    transition: opacity 0.3s;
+    pointer-events: none;
+}
+
+.profile-links {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    padding-left: 3.1vw;
+    gap: 2.5vh;
+    z-index: 2;
+}
+
+.profile-btn {
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+    color: #fff;
+    font-family: 'PinkBlue', sans-serif;
+    font-size: max(1.2vw, 11px);
+    transition: transform 0.2s ease;
+    transform: translateX(0);
+}
+
+.profile-btn:hover {
+    transform: translateX(5px);
+}
+
+.profile-btn img {
+    width: 1.14vw;
+}
+

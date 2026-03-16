@@ -1,0 +1,54 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Shori — {% block description %}Suivi des matchs universitaires{% endblock %}">
+    <title>Shori - {% block title %}Accueil{% endblock %}</title>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    {% block extra_css %}{% endblock %}
+    <link rel="icon" href="{% static 'images/Teams/Teams=Shori.png' %}" type="image/png">
+</head>
+<body {% block body_attrs %}{% endblock %}>
+
+    <!-- Couche 1 : Background -->
+    <div class="bg-layer bg-pattern" aria-hidden="true"></div>
+
+    <!-- Couche 2 : Patterns décoratifs -->
+    <div class="deco deco-pattern1 deco-home" aria-hidden="true"></div>
+    <div class="deco deco-pattern2 deco-home" aria-hidden="true"></div>
+    <div class="deco deco-pattern1-r deco-away" aria-hidden="true"></div>
+    <div class="deco deco-pattern2-r deco-away" aria-hidden="true"></div>
+
+    <!-- Couche 3 : Cadres -->
+    <img src="{% static 'images/Cadres/BigCadre.svg' %}" class="cadre cadre-big" alt="" aria-hidden="true">
+    <img src="{% static 'images/Cadres/LittleCadre.svg' %}" class="cadre cadre-little" alt="" aria-hidden="true">
+
+    <!-- Couche 4 : Navigation -->
+    <nav class="navbar" aria-label="Navigation principale">
+        <div class="nav-main">
+            <img src="{% static 'images/Cadres/NavBar1.svg' %}" class="nav-bg" alt="" aria-hidden="true">
+            <div class="nav-links">
+                <a href="{% url 'home' %}" class="nav-btn {% block nav_home %}{% endblock %}">Accueil</a>
+                <a href="#" class="nav-btn {% block nav_equipe %}{% endblock %}">L'Equipe</a>
+                <a href="#" class="nav-btn {% block nav_calendrier %}{% endblock %}">Calendrier</a>
+                <a href="#" class="nav-btn {% block nav_classement %}{% endblock %}">Classement</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Cadre Instagram à gauche -->
+    <a href="https://instagram.com/shorivolley" target="_blank" rel="noopener" class="instagram-cadre-container" aria-label="Suivre sur Instagram">
+        <img src="{% static 'images/Cadres/LongCadre.svg' %}" class="instagram-cadre" alt="Cadre Instagram" aria-hidden="true">
+        <img src="{% static 'images/Icons/Property 1=Variant5.svg' %}" class="instagram-cadre-icon" alt="Icône Instagram">
+        <span class="instagram-cadre-text">@shorivolley</span>
+    </a>
+
+    <!-- Contenu -->
+    {% block content %}{% endblock %}
+
+    {% block extra_js %}{% endblock %}
+
+</body>
+</html>
